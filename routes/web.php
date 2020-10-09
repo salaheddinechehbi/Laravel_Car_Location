@@ -8,17 +8,12 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\VedengeController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\HomeController;
 use App\Models\Categorie;
 use App\Models\User;
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
+| These routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-|
 */
 
 Route::get('/', function () {
@@ -26,6 +21,12 @@ Route::get('/', function () {
     return view('welcome', compact('categories'));
 });
 Route::get('/categorie', CategorieController::class . '@index');
+Route::get('/categorie/{categorie}/edit', CategorieController::class . '@edit');
+Route::delete('/categorie/{categorie}/delete', CategorieController::class . '@destroy');
+Route::post('/categorie/store', CategorieController::class . '@store');
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

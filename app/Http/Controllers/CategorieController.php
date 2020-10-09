@@ -17,8 +17,10 @@ class CategorieController extends Controller
     public function index()
     {
         //$data = Categorie::paginate(5);
-        $data = Categorie::all();
-        return $data;
+        //$data = Categorie::all();
+        //return $data;
+        $cat = Categorie::all();
+        return response()->json($cat);
     }
 
     /**
@@ -44,10 +46,11 @@ class CategorieController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('categorie/create')->withErrors($validator)->withInput();
+            return redirect('/home')->withErrors($validator)->withInput();
         } 
+        $cat = Categorie::orderBy('id','DESC')->paginate(5);
         Categorie::create($request->all());
-        return redirect()->route('categorie.list');
+        return response()->json($cat);
     }
 
     /**
@@ -69,7 +72,7 @@ class CategorieController extends Controller
      */
     public function edit(Categorie $categorie)
     {
-        //
+        return response()->json($categorie);
     }
 
     /**
@@ -92,6 +95,17 @@ class CategorieController extends Controller
      */
     public function destroy(Categorie $categorie)
     {
-        //
+        $categorie->delete();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getData()
+    {
+        $cat = Categorie::orderBy('id','DESC')->paginate(8);
+        return response()->json($cat);
     }
 }
