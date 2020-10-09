@@ -1952,9 +1952,6 @@ __webpack_require__.r(__webpack_exports__);
       addTitle: ""
     };
   },
-  created: function created() {
-    this.addCat();
-  },
   methods: {
     addCat: function addCat() {
       var _this = this;
@@ -2025,55 +2022,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       cats: {},
-      addTitle: "",
+      //addTitle : "",
       categorieToEdit: ''
     };
   },
   created: function created() {
-    //this.getCats();
     this.getResults();
-    this.addCat();
   },
   methods: {
-    //getCats(){axios.get('/api/cats').then(response => {console.log(response.data);this.cats = response.data;}).catch(error => console.log(error));},
     getResults: function getResults() {
       var _this = this;
 
@@ -2082,37 +2042,29 @@ __webpack_require__.r(__webpack_exports__);
         _this.cats = response.data;
       });
     },
-    addCat: function addCat() {
+    //addCat(){ axios.post('/categorie/store',{title : this.addTitle}).then(response => { this.getResults();$('#exampleModal').modal('hide');}).catch(error => console.log(error));},
+    getCat: function getCat(id) {
       var _this2 = this;
 
-      axios.post('/categorie/store', {
-        title: this.addTitle
-      }).then(function (response) {
-        //console.log(response.data);
-        _this2.getResults();
-
-        $('#exampleModal').modal('hide');
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-    },
-    getCat: function getCat(id) {
-      var _this3 = this;
-
-      axios.get('/categorie/' + id + '/edit/').then(function (response) {
-        return _this3.categorieToEdit = response.data.title;
+      axios.get('/categorie/' + id + '/edit').then(function (response) {
+        return _this2.categorieToEdit = response.data;
       })["catch"](function (error) {
         return console.log(error);
       });
     },
     deleteCat: function deleteCat(id) {
-      var _this4 = this;
+      var _this3 = this;
 
-      axios["delete"]('/categorie/' + id + '/delete').then(function (response) {
-        return _this4.getResults();
-      })["catch"](function (error) {
-        return console.log(error);
-      });
+      if (confirm('Are you sure?')) {
+        axios["delete"]('/categorie/' + id + '/delete').then(function (response) {
+          return _this3.cats = response.data;
+        })["catch"](function (error) {
+          return console.log(error);
+        });
+      }
+    },
+    refresh: function refresh(cate) {
+      this.cats = cate.data;
     }
   },
   mounted: function mounted() {
@@ -2161,7 +2113,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['categorieToEdit']
+  props: ['categorieToEdit'],
+  methods: {
+    updateCat: function updateCat() {
+      var _this = this;
+
+      axios.put('/categorie/' + this.categorieToEdit.id + '/edit', {
+        title: this.categorieToEdit.title
+      }).then(function (response) {
+        return _this.$emit('cat-updated', response);
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -38518,7 +38483,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-primary",
-                  attrs: { type: "button" },
+                  attrs: { type: "button", "data-dismiss": "modal" },
                   on: { click: _vm.addCat }
                 },
                 [_vm._v("Validé")]
@@ -38600,91 +38565,12 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-10" }),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "modal fade",
-            attrs: {
-              id: "exampleModal",
-              tabindex: "-1",
-              "aria-labelledby": "exampleModalLabel",
-              "aria-hidden": "true"
-            }
-          },
-          [
-            _c("div", { staticClass: "modal-dialog" }, [
-              _c("div", { staticClass: "modal-content" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
-                  _c("form", [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-form-label",
-                          attrs: { for: "addTitle" }
-                        },
-                        [_vm._v("Libelle")]
-                      ),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.addTitle,
-                            expression: "addTitle"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", id: "addTitle" },
-                        domProps: { value: _vm.addTitle },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.addTitle = $event.target.value
-                          }
-                        }
-                      })
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-footer" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "button", "data-dismiss": "modal" }
-                    },
-                    [_vm._v("Fermer")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: { click: _vm.addCat }
-                    },
-                    [_vm._v("Validé")]
-                  )
-                ])
-              ])
-            ])
-          ]
-        )
-      ]),
+      _c("add-categorie", { on: { "cat-added": _vm.refresh } }),
       _vm._v(" "),
-      _c("edit-categorie", { attrs: { categorieToEdit: _vm.categorieToEdit } }),
+      _c("edit-categorie", {
+        attrs: { categorieToEdit: _vm.categorieToEdit },
+        on: { "cat-updated": _vm.refresh }
+      }),
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
@@ -38704,7 +38590,7 @@ var render = function() {
                     attrs: { id: "example" }
                   },
                   [
-                    _vm._m(2),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c(
                       "tbody",
@@ -38740,6 +38626,7 @@ var render = function() {
                                 attrs: { href: "" },
                                 on: {
                                   click: function($event) {
+                                    $event.preventDefault()
                                     return _vm.deleteCat(cat.id)
                                   }
                                 }
@@ -38787,50 +38674,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#exampleModal"
-          }
-        },
-        [_vm._v("\r\n                Ajouter\r\n            ")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Ajouter Catégorie")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -38900,19 +38743,23 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.categorieToEdit,
-                      expression: "categorieToEdit"
+                      value: _vm.categorieToEdit.title,
+                      expression: "categorieToEdit.title"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text", id: "editTitle" },
-                  domProps: { value: _vm.categorieToEdit },
+                  domProps: { value: _vm.categorieToEdit.title },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.categorieToEdit = $event.target.value
+                      _vm.$set(
+                        _vm.categorieToEdit,
+                        "title",
+                        $event.target.value
+                      )
                     }
                   }
                 })
@@ -38920,7 +38767,26 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v("Fermer")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "button", "data-dismiss": "modal" },
+                on: { click: _vm.updateCat }
+              },
+              [_vm._v("Enregister")]
+            )
+          ])
         ])
       ])
     ]
@@ -38949,27 +38815,6 @@ var staticRenderFns = [
           }
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Fermer")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Modifier")]
       )
     ])
   }

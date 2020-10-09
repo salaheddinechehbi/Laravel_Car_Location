@@ -27,7 +27,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-              <button type="button" @click="addCat" class="btn btn-primary">Validé</button>
+              <button type="button" @click="addCat" data-dismiss="modal" class="btn btn-primary">Validé</button>
             </div>
           </div>
         </div>
@@ -42,9 +42,6 @@
             return{
                 addTitle : ""
             }            
-        },
-        created () {
-            this.addCat()
         },
         methods : {
             addCat(){

@@ -13,13 +13,13 @@
                 <form>
                     <div class="form-group">
                       <label for="editTitle" class="col-form-label">Libelle</label>
-                      <input type="text" v-model="categorieToEdit" class="form-control" id="editTitle">
+                      <input type="text" v-model="categorieToEdit.title" class="form-control" id="editTitle">
                     </div>
                   </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-              <button type="button" class="btn btn-primary">Modifier</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" @click="updateCat">Enregister</button>
             </div>
           </div>
         </div>
@@ -29,7 +29,14 @@
 
 <script>
     export default {
-        props : ['categorieToEdit']
+        props : ['categorieToEdit'],
+        methods : {
+          updateCat(){
+            axios.put('/categorie/'+ this.categorieToEdit.id + '/edit', {title : this.categorieToEdit.title})
+            .then(response => this.$emit('cat-updated', response))
+            .catch(error => console.log(error));
+          }
+        }
     }
     
 </script>

@@ -22,6 +22,7 @@ Route::get('/', function () {
 });
 Route::get('/categorie', CategorieController::class . '@index');
 Route::get('/categorie/{categorie}/edit', CategorieController::class . '@edit');
+Route::put('/categorie/{categorie}/edit', CategorieController::class . '@update');
 Route::delete('/categorie/{categorie}/delete', CategorieController::class . '@destroy');
 Route::post('/categorie/store', CategorieController::class . '@store');
 

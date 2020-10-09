@@ -19,8 +19,7 @@ class CategorieController extends Controller
         //$data = Categorie::paginate(5);
         //$data = Categorie::all();
         //return $data;
-        $cat = Categorie::all();
-        return response()->json($cat);
+        return $this->refresh();
     }
 
     /**
@@ -48,9 +47,8 @@ class CategorieController extends Controller
         if ($validator->fails()) {
             return redirect('/home')->withErrors($validator)->withInput();
         } 
-        $cat = Categorie::orderBy('id','DESC')->paginate(5);
         Categorie::create($request->all());
-        return response()->json($cat);
+        return $this->refresh();
     }
 
     /**
@@ -84,7 +82,10 @@ class CategorieController extends Controller
      */
     public function update(Request $request, Categorie $categorie)
     {
-        //
+        $categorie->update([
+            'title' => $request->title
+        ]);
+        return $this->refresh();
     }
 
     /**
@@ -95,7 +96,12 @@ class CategorieController extends Controller
      */
     public function destroy(Categorie $categorie)
     {
-        $categorie->delete();
+        if($categorie->delete()){
+            return $this->refresh();
+        }else{
+            return response()->json(['error' => 'destroy function error'], '425');
+        }
+       
     }
 
     /**
@@ -105,7 +111,11 @@ class CategorieController extends Controller
      */
     public function getData()
     {
-        $cat = Categorie::orderBy('id','DESC')->paginate(8);
+        return $this->refresh();
+    }
+
+    public function refresh(){
+        $cat = Categorie::orderBy('id','DESC')->paginate(6);
         return response()->json($cat);
     }
 }

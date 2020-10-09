@@ -1,41 +1,7 @@
 <template>
 <div>
-    <div class="row">
-        <div class="col-md-10"></div>
-        <div class="col-md-2">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                Ajouter
-            </button>
-        </div>
-
-
-         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Ajouter Catégorie</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                      <label for="addTitle" class="col-form-label">Libelle</label>
-                      <input type="text" class="form-control" v-model="addTitle" id="addTitle">
-                    </div>
-                  </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-              <button type="button" @click="addCat" class="btn btn-primary">Validé</button>
-            </div>
-          </div>
-        </div>
-    </div>
-
-    </div>
-    <edit-categorie v-bind:categorieToEdit="categorieToEdit"></edit-categorie>
+    <add-categorie @cat-added="refresh"></add-categorie>
+    <edit-categorie @cat-updated="refresh" v-bind:categorieToEdit="categorieToEdit"></edit-categorie>
     <br>
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -56,7 +22,7 @@
                                 <td>{{cat.title}}</td>
                                 <td> 
                                     <a href="" class="btn btn-warning" @click="getCat(cat.id)" data-toggle="modal" data-target="#editModal">Modifier</a> 
-                                    <a href="" class="btn btn-danger" @click="deleteCat(cat.id)">Supprimer</a> 
+                                    <a href="" class="btn btn-danger" @click.prevent="deleteCat(cat.id)">Supprimer</a> 
                                 </td>
                             </tr>
                         </tbody>
@@ -81,41 +47,35 @@
         data () {
             return{
                 cats : {},
-                addTitle : "",
+                //addTitle : "",
                 categorieToEdit : ''
             }            
         },
         created () {
-            //this.getCats();
             this.getResults();
-            this.addCat()
         },
         methods : {
-            //getCats(){axios.get('/api/cats').then(response => {console.log(response.data);this.cats = response.data;}).catch(error => console.log(error));},
             getResults(page = 1) {
 			    axios.get('/api/cats?page=' + page)
 				.then(response => {
 					this.cats = response.data;
 				});
             },
-            addCat(){
-                axios.post('/categorie/store',{title : this.addTitle})
-                .then(response => {
-                    //console.log(response.data);
-                    this.getResults();
-                    $('#exampleModal').modal('hide');
-                })
-                .catch(error => console.log(error));
-            },
+            //addCat(){ axios.post('/categorie/store',{title : this.addTitle}).then(response => { this.getResults();$('#exampleModal').modal('hide');}).catch(error => console.log(error));},
             getCat(id){
-                axios.get('/categorie/'+ id +'/edit/')
-                .then(response => this.categorieToEdit = response.data.title )
+                axios.get('/categorie/'+ id +'/edit')
+                .then(response => this.categorieToEdit = response.data )
                 .catch(error => console.log(error))
             },
             deleteCat(id){
-                axios.delete('/categorie/' + id + '/delete')
-                .then(response => this.getResults())
-                .catch(error => console.log(error));
+                if(confirm('Are you sure?')) {
+                    axios.delete('/categorie/' + id + '/delete')
+                    .then(response => this.cats = response.data)
+                    .catch(error => console.log(error));
+                }
+            },
+            refresh(cate){
+                this.cats = cate.data
             }
         },
         mounted(){
