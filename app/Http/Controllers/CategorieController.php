@@ -16,10 +16,14 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        //$data = Categorie::paginate(5);
-        //$data = Categorie::all();
-        //return $data;
-        return $this->refresh();
+        if(request('q') != "null"){
+            $q = request('q');
+            $cats['data'] = Categorie::where('title', 'LIKE', "%{$q}%")->get();
+            return response()->json($cats);
+        }else{
+            return $this->refresh();
+        }
+        
     }
 
     /**

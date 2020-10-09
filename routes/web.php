@@ -20,7 +20,7 @@ Route::get('/', function () {
     $categories = User::all();
     return view('welcome', compact('categories'));
 });
-Route::get('/categorie', CategorieController::class . '@index');
+Route::get('/categorie/{q?}', CategorieController::class . '@index');
 Route::get('/categorie/{categorie}/edit', CategorieController::class . '@edit');
 Route::put('/categorie/{categorie}/edit', CategorieController::class . '@update');
 Route::delete('/categorie/{categorie}/delete', CategorieController::class . '@destroy');

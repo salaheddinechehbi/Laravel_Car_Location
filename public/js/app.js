@@ -2022,12 +2022,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       cats: {},
-      //addTitle : "",
-      categorieToEdit: ''
+      categorieToEdit: '',
+      q: ''
     };
   },
   created: function created() {
@@ -2061,6 +2067,19 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {
           return console.log(error);
         });
+      }
+    },
+    searchCat: function searchCat() {
+      var _this4 = this;
+
+      if (this.q.length > 3) {
+        axios.get('/categorie/' + this.q).then(function (response) {
+          return _this4.cats = response.data;
+        })["catch"](function (error) {
+          return console.log(error);
+        });
+      } else {
+        this.getResults();
       }
     },
     refresh: function refresh(cate) {
@@ -38576,6 +38595,35 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-1" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-10" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.q,
+                    expression: "q"
+                  }
+                ],
+                staticStyle: { padding: "5px", margin: "5px" },
+                attrs: { type: "text", placeholder: "racherche categorie ..." },
+                domProps: { value: _vm.q },
+                on: {
+                  keyup: _vm.searchCat,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.q = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-1" }),
             _vm._v(" "),

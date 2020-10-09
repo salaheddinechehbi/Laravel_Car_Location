@@ -8,6 +8,12 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
+                    <input type="text" @keyup="searchCat" v-model="q" style="padding:5px;margin:5px;" placeholder="racherche categorie ..." />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
                     <table id="example" class="table table-striped table-bordered">
                         <thead>
                             <tr>
@@ -47,8 +53,8 @@
         data () {
             return{
                 cats : {},
-                //addTitle : "",
-                categorieToEdit : ''
+                categorieToEdit : '',
+                q : ''
             }            
         },
         created () {
@@ -72,6 +78,15 @@
                     axios.delete('/categorie/' + id + '/delete')
                     .then(response => this.cats = response.data)
                     .catch(error => console.log(error));
+                }
+            },
+            searchCat(){
+                if(this.q.length > 3){
+                    axios.get('/categorie/' + this.q)
+                    .then(response => this.cats = response.data)
+                    .catch(error => console.log(error));
+                }else{
+                    this.getResults();
                 }
             },
             refresh(cate){
