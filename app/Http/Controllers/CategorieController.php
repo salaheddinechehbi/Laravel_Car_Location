@@ -16,6 +16,11 @@ class CategorieController extends Controller
      */
     public function index()
     {
+        return view('categorie');
+    }
+    
+    public function searchCat()
+    {
         if(request('q') != "null"){
             $q = request('q');
             $cats['data'] = Categorie::where('title', 'LIKE', "%{$q}%")->get();
@@ -23,7 +28,6 @@ class CategorieController extends Controller
         }else{
             return $this->refresh();
         }
-        
     }
 
     /**

@@ -20,13 +20,16 @@ Route::get('/', function () {
     $categories = User::all();
     return view('welcome', compact('categories'));
 });
-Route::get('/categorie/{q?}', CategorieController::class . '@index');
+Route::get('/categorie/{q?}', CategorieController::class . '@searchCat');
 Route::get('/categorie/{categorie}/edit', CategorieController::class . '@edit');
 Route::put('/categorie/{categorie}/edit', CategorieController::class . '@update');
 Route::delete('/categorie/{categorie}/delete', CategorieController::class . '@destroy');
 Route::post('/categorie/store', CategorieController::class . '@store');
+Route::get('/categories', [CategorieController::class, 'index']);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/error', [HomeController::class, 'error']);
 
 
 Auth::routes();
