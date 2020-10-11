@@ -4,7 +4,7 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-    <home></home>
+    <fonction></fonction>
 
 </div>
 <!-- End of Content Wrapper -->

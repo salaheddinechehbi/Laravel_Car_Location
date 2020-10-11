@@ -25,7 +25,11 @@ Vue.component('data-table', require('./components/DataTable.vue').default);
 Vue.component('categorie', require('./components/Categorie/CategorieList.vue').default);
 Vue.component('add-categorie', require('./components/Categorie/AddCategorie.vue').default);
 Vue.component('edit-categorie', require('./components/Categorie/EditCategorie.vue').default);
+Vue.component('fonction', require('./components/Fonction/FonctionList.vue').default);
+Vue.component('add-fonction', require('./components/Fonction/AddFonction.vue').default);
+Vue.component('edit-fonction', require('./components/Fonction/EditFonction.vue').default);
 Vue.component('error', require('./components/error.vue').default);
+Vue.component('home', require('./components/home.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

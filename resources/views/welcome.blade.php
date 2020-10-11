@@ -44,9 +44,6 @@
                 <div class="col-md-4" style="text-align: center">Car Rent Services</div>
             </div>
 
-            <br>
-
-            <data-table></data-table>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>

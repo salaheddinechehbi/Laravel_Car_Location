@@ -14,7 +14,7 @@ class FonctionController extends Controller
      */
     public function index()
     {
-        //
+        return view('fonction');
     }
 
     /**
@@ -24,7 +24,7 @@ class FonctionController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -35,7 +35,8 @@ class FonctionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Fonction::create($request->all());
+        return $this->refresh();
     }
 
     /**
@@ -57,7 +58,7 @@ class FonctionController extends Controller
      */
     public function edit(Fonction $fonction)
     {
-        //
+        return response()->json($fonction);
     }
 
     /**
@@ -69,7 +70,10 @@ class FonctionController extends Controller
      */
     public function update(Request $request, Fonction $fonction)
     {
-        //
+        $fonction->update([
+            'title' => $request->title
+        ]);
+        return $this->refresh();
     }
 
     /**
@@ -80,6 +84,19 @@ class FonctionController extends Controller
      */
     public function destroy(Fonction $fonction)
     {
-        //
+        if($fonction->delete()){
+            return $this->refresh();
+        }else{
+            return response()->json(['error' => 'destroy function error'], '425');
+        }
+    }
+
+    public function getFonctions(){
+        return $this->refresh();
+    }
+
+    public function refresh(){
+        $fcts = Fonction::orderBy('id','DESC')->paginate(6);
+        return response()->json($fcts);
     }
 }

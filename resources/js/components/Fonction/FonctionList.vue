@@ -1,12 +1,11 @@
 <template>
-
     <div>
         
         <!-- Dropdown Card Example -->
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Gestion Categories</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Gestion Des Fonctions</h6>
                 <div class="dropdown no-arrow">
                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -22,14 +21,14 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                <add-categorie @cat-added="refresh"></add-categorie>
-                <edit-categorie @cat-updated="refresh" v-bind:categorieToEdit="categorieToEdit"></edit-categorie>
+                <add-fonction @fonction-added="refresh"></add-fonction>
+                <edit-fonction @fonction-updated="refresh" v-bind:fonctionToEdit="fonctionToEdit"></edit-fonction>
                 <br>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="text" @keyup="searchCat" v-model="q" style="padding:5px;margin:5px;" placeholder="recherche categorie ..." />
+                                <input type="text" v-model="q" style="padding:5px;margin:5px;" placeholder="recherche fonction ..." />
                             </div>
                         </div>
                         <div class="row">
@@ -43,18 +42,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>                   
-                                        <tr v-for="cat in cats.data" v-bind:key="cat.id">
-                                            <td>{{cat.id}}</td>
-                                            <td>{{cat.title}}</td>
+                                        <tr v-for="fct in fonctions.data" v-bind:key="fct.id">
+                                            <td>{{fct.id}}</td>
+                                            <td>{{fct.title}}</td>
                                             <td> 
-                                                <a href="" class="btn btn-warning" @click="getCat(cat.id)" data-toggle="modal" data-target="#editModal">Modifier</a> 
-                                                <a href="" class="btn btn-danger" @click.prevent="deleteCat(cat.id)">Supprimer</a> 
+                                                <a href="" class="btn btn-warning" @click="getFonction(fct.id)" data-toggle="modal" data-target="#editFonctionModal">Modifier</a> 
+                                                <a href="" class="btn btn-danger" @click.prevent="deleteFonction(fct.id)" >Supprimer</a> 
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             <!-- <pagination :data="cats" @pagination-change-page="getResults"></pagination> -->
-                                <pagination :data="cats" @pagination-change-page="getResults">
+                                <pagination :data="fonctions" @pagination-change-page="getFonctions">
                                     <span slot="prev-nav">&lt; Previous</span>
                                     <span slot="next-nav">Next &gt;</span>
                                 </pagination>
@@ -66,56 +65,41 @@
         </div>
 
     </div>
-    
 </template>
-
 <script>
-    export default {
-        data () {
-            return{
-                cats : {},
-                categorieToEdit : '',
-                q : ''
-            }            
+export default {
+    data () {
+        return{
+            fonctions :{},
+            fonctionToEdit : '',
+            q : ''
+        }
+    },
+    created(){
+        this.getFonctions();
+    },
+    methods : {
+        getFonctions(page = 1) {
+            axios.get('/api/fcts?page=' + page)
+            .then(response => {
+                this.fonctions = response.data;
+            });
         },
-        created () {
-            this.getResults();
+        getFonction(id){
+            axios.get('/fonction/' + id + '/edit')
+            .then(response => this.fonctionToEdit = response.data )
+            .catch(error => console.log(error));
         },
-        methods : {
-            getResults(page = 1) {
-			    axios.get('/api/cats?page=' + page)
-				.then(response => {
-					this.cats = response.data;
-				});
-            },
-            //addCat(){ axios.post('/categorie/store',{title : this.addTitle}).then(response => { this.getResults();$('#exampleModal').modal('hide');}).catch(error => console.log(error));},
-            getCat(id){
-                axios.get('/categorie/'+ id +'/edit')
-                .then(response => this.categorieToEdit = response.data )
-                .catch(error => console.log(error))
-            },
-            deleteCat(id){
-                if(confirm('Are you sure?')) {
-                    axios.delete('/categorie/' + id + '/delete')
-                    .then(response => this.cats = response.data)
-                    .catch(error => console.log(error));
-                }
-            },
-            searchCat(){
-                if(this.q.length > 3){
-                    axios.get('/categorie/' + this.q)
-                    .then(response => this.cats = response.data)
-                    .catch(error => console.log(error));
-                }else{
-                    this.getResults();
-                }
-            },
-            refresh(cate){
-                this.cats = cate.data
+        deleteFonction(id){
+            if(confirm('Are you sure?')) {
+                axios.delete('/fonction/' + id + '/delete')
+                .then(response => this.fonctions = response.data )
+                .catch(error => console.log(error));
             }
         },
-        mounted(){
-            console.log('Hello From Component');
+        refresh(fcts){
+            this.fonctions = fcts.data
         }
     }
+}
 </script>

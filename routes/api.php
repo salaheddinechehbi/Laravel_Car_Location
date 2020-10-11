@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\FonctionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/cats', CategorieController::class . '@getData');
+Route::get('/fcts', FonctionController::class . '@getFonctions');
 Route::post('/storeCat', CategorieController::class . '@store');
+Route::post('/storeFonc', FonctionController::class . '@store');
