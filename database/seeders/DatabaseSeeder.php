@@ -10,6 +10,7 @@ use App\Models\Car;
 use App\Models\Vedenge;
 use App\Models\Location;
 use App\Models\Categorie;
+use App\Models\Marque;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,12 +21,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Fonction::factory(5)->create();
-        User::factory(8)->create();
-        Categorie::factory(5)->create();
-        Car::factory(20)->create();
-        Client::factory(20)->create();
-        Location::factory(20)->create();
-        Vedenge::factory(10)->create();
+        //Fonction::factory(5)->create();
+        //User::factory(8)->create();
+        //Categorie::factory(5)->create();
+        //Car::factory(20)->create();
+        //Client::factory(20)->create();
+        //Location::factory(20)->create();
+        //Vedenge::factory(10)->create();
+        Marque::factory(15)->create();
     }
 }

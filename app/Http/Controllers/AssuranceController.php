@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Car;
+use App\Models\Assurance;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class CarController extends Controller
+class AssuranceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        return view('car');
+        //
     }
 
     /**
@@ -36,17 +35,16 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        Car::create($request->all());
-        return $this->refresh();
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Car  $car
+     * @param  \App\Models\Assurance  $assurance
      * @return \Illuminate\Http\Response
      */
-    public function show(Car $car)
+    public function show(Assurance $assurance)
     {
         //
     }
@@ -54,10 +52,10 @@ class CarController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Car  $car
+     * @param  \App\Models\Assurance  $assurance
      * @return \Illuminate\Http\Response
      */
-    public function edit(Car $car)
+    public function edit(Assurance $assurance)
     {
         //
     }
@@ -66,10 +64,10 @@ class CarController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Car  $car
+     * @param  \App\Models\Assurance  $assurance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Car $car)
+    public function update(Request $request, Assurance $assurance)
     {
         //
     }
@@ -77,20 +75,11 @@ class CarController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Car  $car
+     * @param  \App\Models\Assurance  $assurance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Car $car)
+    public function destroy(Assurance $assurance)
     {
         //
-    }
-
-    public function getCars(){
-        return $this->refresh();
-    }
-
-    public function refresh(){
-        $data = Car::with('categorie')->orderBy('id','DESC')->paginate(6);
-        return response()->json($data);
     }
 }

@@ -47,8 +47,8 @@
                                             <td>{{cat.id}}</td>
                                             <td>{{cat.title}}</td>
                                             <td> 
-                                                <a href="" class="btn btn-warning" @click="getCat(cat.id)" data-toggle="modal" data-target="#editModal">Modifier</a> 
-                                                <a href="" class="btn btn-danger" @click.prevent="deleteCat(cat.id)">Supprimer</a> 
+                                                <a href="" class="btn btn-outline-info" @click="getCat(cat.id)" data-toggle="modal" data-target="#editModal">Modifier</a> 
+                                                <a href="" class="btn btn-outline-danger" @click.prevent="deleteCat(cat.id)">Supprimer</a> 
                                             </td>
                                         </tr>
                                     </tbody>

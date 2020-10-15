@@ -63,7 +63,7 @@
                     <a class="collapse-item" href="cars">Vehicules</a>
                     <a class="collapse-item" href="clients">Clients</a>
                     <a class="collapse-item" href="users">Employe</a>
-                    <a class="collapse-item" href="categories">Categories</a>
+                    <a class="collapse-item" href="categories">Catégories</a>
                     <a class="collapse-item" href="fonctions">Fonction</a>
                     </div>
                 </div>

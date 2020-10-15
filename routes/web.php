@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/fonction/{fonction}/edit', FonctionController::class . '@edit');
     Route::put('/fonction/{fonction}/edit', FonctionController::class . '@update');
     Route::delete('/fonction/{fonction}/delete', FonctionController::class . '@destroy');
+
+    Route::get('/cars', [CarController::class, 'index']);
     
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 

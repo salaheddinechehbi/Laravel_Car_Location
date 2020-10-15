@@ -46,8 +46,8 @@
                                             <td>{{fct.id}}</td>
                                             <td>{{fct.title}}</td>
                                             <td> 
-                                                <a href="" class="btn btn-warning" @click="getFonction(fct.id)" data-toggle="modal" data-target="#editFonctionModal">Modifier</a> 
-                                                <a href="" class="btn btn-danger" @click.prevent="deleteFonction(fct.id)" >Supprimer</a> 
+                                                <a href="" class="btn btn-outline-info" @click="getFonction(fct.id)" data-toggle="modal" data-target="#editFonctionModal">Modifier</a> 
+                                                <a href="" class="btn btn-outline-danger" @click.prevent="deleteFonction(fct.id)" >Supprimer</a> 
                                             </td>
                                         </tr>
                                     </tbody>

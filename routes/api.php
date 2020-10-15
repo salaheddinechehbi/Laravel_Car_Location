@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\FonctionController;
+use App\Http\Controllers\CarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/cats', CategorieController::class . '@getData');
-Route::get('/fcts', FonctionController::class . '@getFonctions');
+Route::get('/categories', CategorieController::class . '@show');
 Route::post('/storeCat', CategorieController::class . '@store');
+Route::get('/fcts', FonctionController::class . '@getFonctions');
 Route::post('/storeFonc', FonctionController::class . '@store');
+Route::get('/cars', CarController::class . '@getCars');
+Route::post('/storeCar', CarController::class . '@store');

@@ -67,7 +67,8 @@ class CategorieController extends Controller
      */
     public function show(Categorie $categorie)
     {
-        //
+        $cats = Categorie::orderBy('id','DESC')->get();
+        return response()->json($cats);
     }
 
     /**
@@ -120,6 +121,11 @@ class CategorieController extends Controller
     public function getData()
     {
         return $this->refresh();
+    }
+
+    public function getCats(){
+        $cats = Categorie::orderBy('id','DESC')->get();
+        return response()->json($cats);
     }
 
     public function refresh(){
